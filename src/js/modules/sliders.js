@@ -2,6 +2,7 @@ const sliders = (slides, dir, prev, next) => {
     'use strict';
 
     let slideIndex = 1;
+    let paused = false;
 
     const items = document.querySelectorAll(slides);
 
@@ -10,7 +11,7 @@ const sliders = (slides, dir, prev, next) => {
             slideIndex = 1;
         }
         if (n < 1) {
-            slideIndex = slides.length;
+            slideIndex = items.length;
         }
 
         items.forEach(item => {
@@ -26,16 +27,49 @@ const sliders = (slides, dir, prev, next) => {
     }
 
     try {
-        const prevBtn = document.querySelectorAll(prev);
-        const nextBtn = document.querySelectorAll(next);
+        const prevBtn = document.querySelector(prev);
+        const nextBtn = document.querySelector(next);
 
         prevBtn.addEventListener('click', () => {
             plusSlide(-1);
+            items[slideIndex - 1].classList.remove('slideInLeft');
+            items[slideIndex - 1].classList.add('slideInRight');
         });
         nextBtn.addEventListener('click', () => {
             plusSlide(1);
+            items[slideIndex - 1].classList.remove('slideInRight');
+            items[slideIndex - 1].classList.add('slideInLeft');
         });
     } catch (e) {}
+
+    function activateAnimation() {
+
+        if (dir === 'vertical') {
+            paused = setInterval(function() {
+                plusSlide(1);
+                items[slideIndex - 1].classList.add('slideInDown');
+            }, 4000);
+        } else {
+            paused = setInterval(function() {
+                plusSlide(1);
+                items[slideIndex - 1].classList.remove('slideInRight');
+                items[slideIndex - 1].classList.add('slideInLeft');
+            }, 4000);
+        }
+    }
+
+    activateAnimation();
+
+    items[0].parentNode.addEventListener('mouseenter', () => {
+        clearInterval(paused);
+    });
+
+    items[0].parentNode.addEventListener('mouseleave', () => {
+        activateAnimation();
+    });
+
+
+
 };
 
 export default sliders;
