@@ -3494,22 +3494,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_4__);
-!(function webpackMissingModule() { var e = new Error("Cannot find module './onlyNumber'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 
 
 
 
 
 
-
-var forms = function forms(state) {
+// import checkNumInputs from './onlyNumber';
+var forms = function forms() {
   var form = document.querySelectorAll('form');
-  var inputs = document.querySelectorAll('input');
-  !(function webpackMissingModule() { var e = new Error("Cannot find module './onlyNumber'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())('input[name="user_phone"]');
+  var inputs = document.querySelectorAll('input'); // checkNumInputs('input[name="user_phone"]');
+
   var message = {
     loading: 'Загрузка...',
     success: 'Спасибо! Скоро мы с вами свяжемся',
-    failure: 'Что-то пошло не так...'
+    failure: 'Что-то пошло не так...',
+    spinner: 'assets/img/spinner.gif',
+    ok: 'assets/img/ok.png',
+    fail: 'assets/img/fail.png'
+  };
+  var path = {
+    designer: 'assets/server.php',
+    question: 'assets/question.php'
   };
 
   var postData = function postData(url, data) {
@@ -3518,22 +3524,21 @@ var forms = function forms(state) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            document.querySelector('.status').innerHTML = message.loading;
-            _context.next = 3;
+            _context.next = 2;
             return regeneratorRuntime.awrap(fetch(url, {
               method: 'POST',
               body: data
             }));
 
-          case 3:
+          case 2:
             res = _context.sent;
-            _context.next = 6;
+            _context.next = 5;
             return regeneratorRuntime.awrap(res.text());
 
-          case 6:
+          case 5:
             return _context.abrupt("return", _context.sent);
 
-          case 7:
+          case 6:
           case "end":
             return _context.stop();
         }
@@ -3552,7 +3557,18 @@ var forms = function forms(state) {
       e.preventDefault();
       var statusMessage = document.createElement('div');
       statusMessage.classList.add('status');
-      item.append(statusMessage);
+      item.parentNode.append(statusMessage);
+      item.classList.add('amimated', 'fadeOutUp');
+      setTimeout(function () {
+        item.style.display = 'none';
+      }, 400);
+      var statusImg = document.createElement('img');
+      statusImg.setAttribute('src', message.spinner);
+      statusImg.classList.add('amimated', 'fadeInUp');
+      statusMessage.appendChild(statusImg);
+      var textMessage = document.createElement('div');
+      textMessage.textContent = message.loading;
+      statusMessage.appendChild(textMessage);
       var formData = new FormData(item);
 
       if (item.getAttribute('data-calc') === 'end') {
