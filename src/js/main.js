@@ -2,6 +2,7 @@ import modal from './modules/modals';
 import sliders from './modules/sliders';
 import forms from './modules/forms';
 import mask from './modules/mask';
+import checkText from './modules/checkText';
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,5 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sliders('.main-slider-item', 'vertical');
     forms();
     mask('[name="phone"]');
+    checkText('[name="name"]');
+    checkText('[name="message"]');
 
 });
