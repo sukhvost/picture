@@ -1,6 +1,7 @@
 import modal from './modules/modals';
 import sliders from './modules/sliders';
 import forms from './modules/forms';
+import mask from './modules/mask';
 
 
 document.addEventListener('DOMContentLoaded', () => {
